@@ -78,10 +78,13 @@
             // 
             // resultsWindow
             // 
+            resultsWindow.BackColor = Color.White;
+            resultsWindow.BorderStyle = BorderStyle.FixedSingle;
             resultsWindow.Location = new Point(43, 195);
             resultsWindow.Multiline = true;
             resultsWindow.Name = "resultsWindow";
             resultsWindow.ReadOnly = true;
+            resultsWindow.ScrollBars = ScrollBars.Both;
             resultsWindow.Size = new Size(745, 202);
             resultsWindow.TabIndex = 4;
             // 
@@ -116,6 +119,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(833, 479);
             Controls.Add(resultsLabel);
             Controls.Add(statusStrip);
