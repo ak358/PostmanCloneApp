@@ -1,6 +1,7 @@
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
+using PostmanCloneLiblary;
 
 namespace PostmanCloneUI
 {
@@ -13,17 +14,18 @@ namespace PostmanCloneUI
 
         private async void callApi_Click(object sender, EventArgs e)
         {
-            HttpClient client = new HttpClient();
-            var api = apiText.Text;
+            ApiAccess apiAccess = new ApiAccess();
+            var url = apiText.Text;
 
-            //api = "https://pokeapi.co/api/v2/pokemon-species/25/";
+            //url = "https://pokeapi.co/api/v2/pokemon-species/25/";//debug
 
             try
             {
                 systemStatus.Text = "calling...";
-                HttpResponseMessage response = await client.GetAsync(api);
-                string responseBody = await response.Content.ReadAsStringAsync();
-                resultsWindow.Text = responseBody;
+
+                var result = await apiAccess.CallApi(url);
+                resultsWindow.Text = result;
+
                 systemStatus.Text = "Ready";
             }
             catch (Exception ex) 
