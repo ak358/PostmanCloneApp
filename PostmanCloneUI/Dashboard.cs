@@ -18,6 +18,11 @@ namespace PostmanCloneUI
         {
             //url = "https://jsonplaceholder.typicode.com/todos/1";//debug
 
+            if (apiAccess.IsValidUrl(apiText.Text) == false)
+            {
+                systemStatus.Text = "Invalid URL";
+                return;
+            }
             try
             {
                 systemStatus.Text = "calling...";

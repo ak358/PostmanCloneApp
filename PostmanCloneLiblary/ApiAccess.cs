@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -29,6 +30,18 @@ namespace PostmanCloneLiblary
                 return json;
             }   
             return $"Error + { response.StatusCode }";
+        }
+
+        public bool IsValidUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return false;
+            }
+            bool output = Uri.TryCreate(url, 
+                UriKind.Absolute, out Uri uriOutput) && 
+                uriOutput.Scheme == Uri.UriSchemeHttps;
+            return output;
         }
     }
 }
