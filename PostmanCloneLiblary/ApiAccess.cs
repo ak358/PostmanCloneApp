@@ -1,21 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace PostmanCloneLiblary
 {
     public class ApiAccess
     {
-        public async Task<string> CallApi(string url)
+       private readonly HttpClient client = new();
+
+        public async Task<string> CallApiAsync(string url, 
+            bool formatOutput = true,HttpAction action = HttpAction.GET)
         {
-            HttpClient client = new HttpClient();
 
             HttpResponseMessage response = await client.GetAsync(url);
-            string responseBody = await response.Content.ReadAsStringAsync();
-
-            return responseBody;
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                if (formatOutput)
+                {
+                    JsonElement jsonElement = JsonSerializer.Deserialize<JsonElement>(json);
+                    json = JsonSerializer.Serialize(jsonElement,
+                        new JsonSerializerOptions { WriteIndented = true });
+                }
+                return json;
+            }   
+            return $"Error + { response.StatusCode }";
         }
     }
 }

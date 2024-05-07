@@ -7,6 +7,8 @@ namespace PostmanCloneUI
 {
     public partial class Dashboard : Form
     {
+        private readonly ApiAccess apiAccess = new();
+
         public Dashboard()
         {
             InitializeComponent();
@@ -14,18 +16,13 @@ namespace PostmanCloneUI
 
         private async void callApi_Click(object sender, EventArgs e)
         {
-            ApiAccess apiAccess = new ApiAccess();
-            var url = apiText.Text;
-
-            //url = "https://pokeapi.co/api/v2/pokemon-species/25/";//debug
+            //url = "https://jsonplaceholder.typicode.com/todos/1";//debug
 
             try
             {
                 systemStatus.Text = "calling...";
 
-                var result = await apiAccess.CallApi(url);
-                resultsWindow.Text = result;
-
+                resultsWindow.Text = await apiAccess.CallApiAsync(apiText.Text);
                 systemStatus.Text = "Ready";
             }
             catch (Exception ex) 
